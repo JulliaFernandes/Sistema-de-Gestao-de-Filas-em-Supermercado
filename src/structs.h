@@ -1,4 +1,10 @@
-#include "includes.c"
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
+#include "includes.h"  // Certifique-se que este arquivo existe
+// #include "caixa.h"
+// #include "cliente.h"
+// #include "fila.h"
 
 typedef struct Cliente {
     char nome[100];
@@ -29,3 +35,5 @@ typedef struct Fila {
     int numClientes;
     bool statusCaixa;
 } Fila;
+
+#endif  // STRUCTS_H
