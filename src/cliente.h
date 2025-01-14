@@ -7,6 +7,7 @@
 
 
 void imprimirCliente(int qtdCaixas, Fila caixas[]);
+int validarCPF(const char *cpf);
 void InserirCliente(Fila *fila, Cliente *cliente);
 void CadastroCliente(Fila caixas[], int qtdCaixas, int *contCaixasAbertos, int *primeiroClienteInserido);
 void RetirarCliente(Fila caixas[], int qtdCaixas);

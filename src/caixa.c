@@ -9,7 +9,7 @@ void criarCaixa(Fila *c) {
 
 int ProcurarCaixaAberto(Fila caixas[], int qtdCaixas) {
     int indiceCaixa = -1;
-    int menorNumeroDeClientes = INT_MAX; // Inicializa com um valor muito alto
+    int menorNumeroDeClientes = INT_MAX; // inicia com um valor muito alto
 
     for (int i = 0; i < qtdCaixas; i++) {
         if (caixas[i].statusCaixa) {

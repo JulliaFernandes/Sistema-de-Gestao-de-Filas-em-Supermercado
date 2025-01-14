@@ -27,6 +27,22 @@ void imprimirCliente(int qtdCaixas, Fila caixas[]) {
     }
 }
 
+int validarCPF(const char *cpf) {
+    int length = strlen(cpf);
+
+    // tem de ser 11
+    if (length != 11) {
+        return 0;
+    }
+
+    for (int i = 0; i < length; i++) { // ter de ser tudo numero
+        if (!isdigit(cpf[i])) {
+            return 0;
+        }
+    }
+    return 1; // CPF válido
+}
+
 void InserirCliente(Fila *fila, Cliente *cliente) {
     No *novoNo = (No*) malloc(sizeof(No));
 
@@ -37,22 +53,21 @@ void InserirCliente(Fila *fila, Cliente *cliente) {
     novoNo->cliente = cliente;
     novoNo->prox = NULL;
 
-    // Se a fila estiver vazia ou o novo cliente tiver maior prioridade (menor número)
+    // se não tiver ngn a fila ou o cliente tem maior prioridade
     if (fila->inicio == NULL || cliente->prioridade < fila->inicio->cliente->prioridade) {
         novoNo->prox = fila->inicio;
         fila->inicio = novoNo;
-        if (fila->fim == NULL) {  // Se era o primeiro cliente da fila
+        if (fila->fim == NULL) {
             fila->fim = novoNo;
         }
     } else {
-        // Percorre a fila para encontrar a posição correta de inserção
         No *atual = fila->inicio;
         while (atual->prox != NULL && atual->prox->cliente->prioridade <= cliente->prioridade) {
             atual = atual->prox;
         }
         novoNo->prox = atual->prox;
         atual->prox = novoNo;
-        if (novoNo->prox == NULL) {  // Se for o último cliente da fila
+        if (novoNo->prox == NULL) {  // se for o ultimo na fila
             fila->fim = novoNo;
         }
     }
@@ -72,19 +87,33 @@ void CadastroCliente(Fila caixas[], int qtdCaixas, int *contCaixasAbertos, int *
     }
 
     int numCaixa = ValidacaoCaixa(qtdCaixas);
-    if (numCaixa == -1 || !caixas[numCaixa].statusCaixa) {
-        printf("Caixa %d não está aberto ou não existe.\n", numCaixa + 1);
+    if(numCaixa == -1){
+    // if (numCaixa == -1 || !caixas[numCaixa].statusCaixa) {
+        // printf("Caixa %d não está aberto ou não existe.\n", numCaixa + 1);
+        // printf("Caixa não existe");
+        free(novoCliente);
+        return;
+    }
+    if(!caixas[numCaixa].statusCaixa){
+        printf("Caixa %d está fechado.\n", numCaixa + 1);
         free(novoCliente);
         return;
     }
 
-    // char nomeAux[100];
     printf("Digite seu nome: \n> ");
-    // scanf("%99s", novoCliente->nome);
-    scanf(" %[^\n]%*c",novoCliente->nome); 
+    scanf(" %[^\n]%*c",novoCliente->nome); //ele vai ler tudo ate encontrar um \n mas vai descartar o \n depois, isso por causa do *c
 
-    printf("Digite seu CPF: \n> ");
-    scanf("%11s", novoCliente->cpf);
+    do {
+        printf("Digite seu CPF (apenas números, exatamente 11 dígitos): \n> ");
+        scanf("%11s", novoCliente->cpf);
+
+        char c;
+        while ((c = getchar()) != '\n' && c != EOF) {} //limpa o buffer 
+
+        if (!validarCPF(novoCliente->cpf)) {
+            printf("CPF inválido! O CPF deve conter exatamente 11 dígitos numéricos.\n");
+        }
+    } while (!validarCPF(novoCliente->cpf));
 
     printf("Digite sua prioridade (1 - Alta, 2 - Média, 3 - Baixa): \n> ");
     scanf("%d", &novoCliente->prioridade);

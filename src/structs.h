@@ -18,11 +18,11 @@ typedef struct Caixa {
     bool statusCaixa;
 } Caixa;
 
-typedef struct FilaPrioridade {
-    Caixa *inicio;
-    Caixa *fim;
-    int numCaixas;
-} FilaPrioridade;
+// typedef struct FilaPrioridade {
+//     Caixa *inicio;
+//     Caixa *fim;
+//     int numCaixas;
+// } FilaPrioridade;
 
 typedef struct No {
     Cliente *cliente;
