@@ -14,7 +14,6 @@ int ProcurarCaixaAberto(Fila caixas[], int qtdCaixas) {
     for (int i = 0; i < qtdCaixas; i++) {
         if (caixas[i].statusCaixa) {
             // printf("Caixa %d está aberto.\n", i + 1);
-            // Verifica o número de clientes no caixa atual
             if (caixas[i].numClientes < menorNumeroDeClientes) {
                 menorNumeroDeClientes = caixas[i].numClientes;
                 indiceCaixa = i;
@@ -63,10 +62,8 @@ void fecharCaixa(Fila caixas[], int qtdCaixas, int *contCaixasAbertos) {
         return;
     }
 
-    // Fechando o caixa atual
-    caixas[numCaixa].statusCaixa = false;
+    caixas[numCaixa].statusCaixa = false; // fecha o caixa do atual
 
-    // Encontrar um caixa aberto para receber os clientes
     int novoCaixaAReceberClientes = ProcurarCaixaAberto(caixas, qtdCaixas);
     printf("Caixa %d fechado com sucesso.\n", numCaixa + 1);
     
@@ -79,7 +76,7 @@ void fecharCaixa(Fila caixas[], int qtdCaixas, int *contCaixasAbertos) {
         temp = temp->prox;
     }
 
-    // Limpando a fila do caixa que foi fechado
+    // para limpar a fila do caixa que fechou
     caixas[numCaixa].inicio = NULL;
     caixas[numCaixa].fim = NULL;
     caixas[numCaixa].numClientes = 0;

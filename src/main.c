@@ -33,7 +33,7 @@ int main () {
         printf(CYAN "\t╚════════════════════════════════════════╝\n" RESET);
         printf(YELLOW " > " RESET);
 
-        if (scanf("%d", &op) != 1) {  // Verifica se a leitura foi bem-sucedida
+        if (scanf("%d", &op) != 1) {  //ve se deu certo a leitura
             printf(RED "Entrada inválida! Por favor, digite um número.\n" RESET);
             int c;
             while ((c = getchar()) != '\n' && c != EOF) {}
